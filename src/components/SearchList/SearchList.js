@@ -76,6 +76,22 @@ const items = [
 ]
 
 export default class SearchList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchParams: '',
+      searchResults: []
+    };
+
+    this._handleInput = this._handleInput.bind(this);
+  }
+
+  _handleInput(event) {
+    // let content = event.target.value;
+    this.setState({searchParams: event.target.value});
+  }
+
   render() {
     return (
       <Card>
@@ -84,6 +100,11 @@ export default class SearchList extends Component {
           This component filters a list based on user input.
         </HeadingSmall>
         {/* display input and results here */}
+        <SearchInput placeholder="Search..." onChange={this._handleInput}></SearchInput>
+        {this.state.searchResults !== [] ?
+        <SearchResultsHeading></SearchResultsHeading>
+        
+        }
       </Card>
     )
   }

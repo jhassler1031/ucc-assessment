@@ -31,7 +31,6 @@ export default class FetchJson extends Component {
       return response.json();
     })
     .then((responseAsJson)=> {
-      console.log("jsondata: ", responseAsJson);
       this.setState({jsonDisplay: JSON.stringify(responseAsJson, null, 1)});
     })
     .catch((error)=>{
@@ -40,9 +39,7 @@ export default class FetchJson extends Component {
     });
   }
   render() {
-    // let dataDisplay = this.state.jsonDisplay.map((item)=>{
-    //   return <CodeBlock>{item}</CodeBlock>
-    // });
+
     return (
       <Card>
         <Heading color={COLORS.pink[300]}>FetchJson Component</Heading>
@@ -51,7 +48,6 @@ export default class FetchJson extends Component {
         </HeadingSmall>
         {/* display JSON data */}
         <CodeBlock>{this.state.jsonDisplay}</CodeBlock>
-        {/* {dataDisplay} */}
       </Card>
     )
   }
