@@ -32,7 +32,7 @@ export default class FetchJson extends Component {
     })
     .then((responseAsJson)=> {
       console.log("jsondata: ", responseAsJson);
-      this.setState({jsonDisplay: responseAsJson});
+      this.setState({jsonDisplay: JSON.stringify(responseAsJson, null, 1)});
     })
     .catch((error)=>{
       console.log("There was a problem: \n", error);
