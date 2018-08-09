@@ -85,14 +85,38 @@ export default class SearchList extends Component {
     };
 
     this._handleInput = this._handleInput.bind(this);
+    this._search = this._search.bind(this);
   }
 
   _handleInput(event) {
-    // let content = event.target.value;
-    this.setState({searchParams: event.target.value});
+    let self = this;
+    this.setState({searchParams: event.target.value}, this._search);
+  }
+
+  _search() {
+    if (this.state.searchParams !== '') {
+      let filteredArray = [];
+      items.filter((item)=>{
+        if (item.toLowerCase().indexOf(this.state.searchParams.toLowerCase()) > -1) {
+          filteredArray.push(item);
+        }
+      });
+      if (filteredArray.length > 0 ) {
+        this.setState({searchResults: filteredArray});
+      }
+      else {
+        this.setState({searchResults: ["No Results!"]});
+      }
+    }
+    else {
+      this.setState({searchResults: []});
+    }
   }
 
   render() {
+    let searchResults = this.state.searchResults.map((result, index)=>{
+      return <SearchResult key={index}>{result}</SearchResult>
+    })
     return (
       <Card>
         <Heading color={COLORS.yellow[300]}>FilterList Component</Heading>
@@ -101,9 +125,15 @@ export default class SearchList extends Component {
         </HeadingSmall>
         {/* display input and results here */}
         <SearchInput placeholder="Search..." onChange={this._handleInput}></SearchInput>
-        {this.state.searchResults !== [] ?
-        <SearchResultsHeading></SearchResultsHeading>
-        
+        {this.state.searchResults.length > 0 ?
+          <div>
+            <SearchResultsHeading>Results</SearchResultsHeading>
+            <SearchResultsList>
+              {searchResults}
+            </SearchResultsList>
+          </div>
+        :
+        ''
         }
       </Card>
     )
